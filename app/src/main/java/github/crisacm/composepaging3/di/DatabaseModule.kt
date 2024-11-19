@@ -14,9 +14,13 @@ import javax.inject.Singleton
 object DatabaseModule {
   @Provides
   @Singleton
-  fun provideDatabase(@ApplicationContext context: Context): AppDatabase = AppDatabase.getInstance(context)
+  fun provideDatabase(
+    @ApplicationContext context: Context
+  ): AppDatabase = AppDatabase.getInstance(context)
 
   @Provides
   @Singleton
-  fun provideGitRepoDao(appDatabase: AppDatabase) = appDatabase.gitRepoDao()
+  fun provideGitRepoDao(
+    appDatabase: AppDatabase
+  ) = appDatabase.gitRepoDao()
 }

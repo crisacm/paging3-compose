@@ -31,7 +31,7 @@ fun Navigation(startDestination: Any) {
     }
   ) {
     composable<Home> {
-      HomeScreenDestination()
+      HomeDestination()
     }
   }
 }

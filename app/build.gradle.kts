@@ -65,7 +65,8 @@ dependencies {
   implementation(libs.hilt.navigation.compose)
 
   // Paging
-  implementation(libs.paging.compose.common)
+  implementation(libs.paging.runtime)
+  implementation(libs.paging.compose)
 
   // Ktor
   implementation(libs.ktor.client.core)

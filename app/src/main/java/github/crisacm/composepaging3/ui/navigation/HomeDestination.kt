@@ -6,9 +6,10 @@ import github.crisacm.composepaging3.presentation.home.HomeScreen
 import github.crisacm.composepaging3.presentation.home.HomeViewModel
 
 @Composable
-fun HomeScreenDestination() {
+fun HomeDestination() {
   val viewModel = hiltViewModel<HomeViewModel>()
   HomeScreen(
+    data = viewModel.data,
     state = viewModel.viewState.value,
     onEvent = viewModel::setEvent
   )
