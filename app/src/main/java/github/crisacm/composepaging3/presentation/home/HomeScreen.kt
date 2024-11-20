@@ -33,7 +33,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
@@ -56,6 +59,9 @@ fun HomeScreen(
   state: HomeContracts.HomeState,
   onEvent: (event: HomeContracts.HomeEvent) -> Unit = {}
 ) {
+  val focusRequester = remember { FocusRequester() }
+  val keyboardController = LocalSoftwareKeyboardController.current
+
   val snackbarHostState = remember { SnackbarHostState() }
   val username = remember { mutableStateOf("") }
 
@@ -81,11 +87,17 @@ fun HomeScreen(
         OutlinedTextField(
           modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 24.dp, end = 24.dp, top = 10.dp),
+            .padding(start = 24.dp, end = 24.dp, top = 10.dp)
+            .focusRequester(focusRequester),
           value = username.value,
           onValueChange = { username.value = it },
           keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-          keyboardActions = KeyboardActions(onSearch = { onEvent(HomeContracts.HomeEvent.Search(username.value)) }),
+          keyboardActions = KeyboardActions(
+            onSearch = {
+              onEvent(HomeContracts.HomeEvent.Search(username.value))
+              keyboardController?.hide()
+            }
+          ),
           maxLines = 1,
           trailingIcon = {
             androidx.compose.animation.AnimatedVisibility(
@@ -96,6 +108,8 @@ fun HomeScreen(
               IconButton(onClick = {
                 onEvent(HomeContracts.HomeEvent.Clear)
                 username.value = ""
+                focusRequester.requestFocus()
+                keyboardController?.show()
               }) {
                 Icon(
                   imageVector = Icons.Rounded.Clear,
