@@ -8,5 +8,4 @@ import kotlinx.coroutines.flow.Flow
 interface GitRepoRepo {
   @WorkerThread
   suspend fun fetchRepositoriesPager(username: String): Flow<PagingData<GitRepo>>
-  suspend fun getRepositories(username: String): Result<List<GitRepo>>
 }

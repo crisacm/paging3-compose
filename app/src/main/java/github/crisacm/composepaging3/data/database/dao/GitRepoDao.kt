@@ -12,6 +12,6 @@ interface GitRepoDao {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   suspend fun insert(repos: GitRepoEntity)
 
-  @Query("SELECT * FROM git_repos WHERE owner = :username")
-  suspend fun getRepositories(username: String): List<GitRepoEntity>
+  @Query("SELECT * FROM git_repos WHERE owner = :username ORDER BY id ASC LIMIT :limit OFFSET :offset")
+  suspend fun getRepositories(username: String, limit: Int, offset: Int): List<GitRepoEntity>
 }

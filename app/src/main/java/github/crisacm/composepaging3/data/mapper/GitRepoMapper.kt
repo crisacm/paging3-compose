@@ -12,6 +12,14 @@ fun RepoResponses.asGitRepo(): GitRepo {
   )
 }
 
+fun RepoResponses.asEntity(): GitRepoEntity {
+  return GitRepoEntity(
+    id = id,
+    name = name,
+    owner = owner.login
+  )
+}
+
 fun GitRepo.asEntity(): GitRepoEntity {
   return GitRepoEntity(
     id = id,
